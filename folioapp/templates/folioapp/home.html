@@ -1,0 +1,215 @@
+{% extends 'base1.html'%}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+    <!-- page header -->
+    <header id="home" class="header">
+        <div class="overlay"></div>
+        <div class="header-content container">
+            <h1 class="header-title">
+                <span class="up">SALUT!</span>
+                <span class="down">Je suis Alphonse Kaman</span>
+            </h1>
+            <p class="header-subtitle"><strong>Développeur Backend</strong></p>
+
+            <button class="btn btn-primary"><a href="#portfolio">Visitez mes travaux</a></button>
+        </div>
+    </header><!-- end of page header -->
+
+    <!-- about section -->
+    <section class="section pt-5" id="about">
+        <!-- container -->
+        <div class="container text-center">
+            <!-- about wrapper -->
+            <div class="about">
+                <div class="about-img-holder">
+                    
+                    <img src="{{ profile.photo.url }}" class="about-img" alt="alphonse kaman">
+                </div>
+                <div class="about-caption">
+                    <p class="section-subtitle">Qui suis-je ?</p>
+                    <h2 class="section-title mb-3">Petite histoire</h2>
+                    <p>{{ profile.biography }}</p>
+                    <!-- <button class="btn-rounded btn btn-outline-primary mt-4">Download CV</button> -->
+                </div>
+            </div><!-- end of about wrapper -->
+        </div><!-- end of container -->
+    </section> <!-- end of about section -->
+
+    <!-- service section -->
+    <section class="section" id="service">
+        <div class="container text-center">
+            <p class="section-subtitle">Qu'est-ce que je fais ?</p>
+            <h6 class="section-title mb-6">Services</h6>
+            <!-- row -->
+            <div class="row ">
+                <div class="col-md-6 col-lg-4 mx-auto">
+                    <div class="service-card">
+                        <div class="body">
+                            <img src="{% static 'folioapp/assets/imgs/toolbox.svg' %}"
+                                alt="meyawo Landing page"
+                                class="icon">
+                            <h6 class="title">Developpement Backend</h6>
+                            <p class="subtitle">Labore velit culpa adipisci excepturi consequuntur itaque in nam
+                                molestias dolorem iste quod.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mx-auto">
+                    <div class="service-card">
+                        <div class="body">
+                            <img src="{% static 'folioapp/assets/imgs/responsive.svg' %}"
+                                alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page"
+                                class="icon">
+                            <h6 class="title">Application Mobile</h6>
+                            <p class="subtitle">Labore velit culpa adipisci excepturi consequuntur itaque in nam
+                                molestias dolorem iste quod.</p>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end of row -->
+        </div>
+    </section><!-- end of service section -->
+
+    <!-- portfolio section -->
+    <section class="section" id="portfolio">
+        <div class="container text-center">
+            <p class="section-subtitle">Qu'est-ce que j'ai deja fait ?</p>
+            <h6 class="section-title mb-6">Portfolio</h6>
+            <!-- row -->
+            <div class="row">
+                {% for item in portfolio %}
+                    <div class="col-md-6 col-lg-6">
+                        <a href="{{ item.link }}" class="portfolio-card"  target="_blank">
+                            <img src="{{ item.image.url }}" class="portfolio-card-img"
+                                alt="meyawo Landing page">
+                            <span class="portfolio-card-overlay">
+                                <span class="portfolio-card-caption">
+                                    <h4>{{ item.title }}</h5>
+                                    <p class="font-weight-normal">
+                                        {{ item.description }}
+                                    <div>
+                                        <h6>Technologies Utilisees</h6>
+                                            {% for tech in item.technologies.all %}
+                                                <img src="{{ tech.image.url }}" alt="technologies">
+                                            {% endfor %}
+                                    </div>
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div><!-- end of row -->
+        </div><!-- end of container -->
+    </section> <!-- end of portfolio section -->
+
+    <!-- testimonial section -->
+    <section class="section" id="testmonial">
+        <div class="container text-center">
+            <p class="section-subtitle">Qu'est-ce que les clients pensent de moi ?</p>
+            <h6 class="section-title mb-6">Temoignages</h6>
+
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="testimonial-card">
+                        <div class="testimonial-card-img-holder">
+                            <img src="{% static 'folioapp/assets/imgs/avatar2.jpg' %}" class="testimonial-card-img"
+                            alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
+                        </div>
+                        <div class="testimonial-card-body">
+                            <p class="testimonial-card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                elit. Eaque doloribus autem aperiam earum nostrum omnis blanditiis corporis perspiciatis
+                                adipisci nihil.</p>
+                            <h6 class="testimonial-card-title">Emily Reb</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="testimonial-card">
+                        <div class="testimonial-card-img-holder">
+                            <img src="{% static 'folioapp/assets/imgs/avatar3.jpg' %}" class="testimonial-card-img"
+                                alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
+                        </div>
+                        <div class="testimonial-card-body">
+                            <p class="testimonial-card-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                elit. Eaque doloribus autem aperiam earum nostrum omnis blanditiis corporis perspiciatis
+                                adipisci nihil.</p>
+                            <h6 class="testimonial-card-title">Emily Reb</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end of container -->
+    </section> <!-- end of testimonial section -->
+
+    <!-- blog section -->
+    <section class="section" id="blog">
+        <!-- container -->
+        <div class="container text-center">
+            <p class="section-subtitle">Blog recent?</p>
+            <h6 class="section-title mb-6">Blog</h6>
+            <!-- blog-wrapper -->
+             {% for post in posts %}
+            <div class="blog-card">
+                <div class="blog-card-header">
+                    <img src="{{ post.image.url }}" class="blog-card-img"
+                        alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page">
+                </div>
+                <div class="blog-card-body">
+                    <h5 class="blog-card-title">{{ post.title }}</h6>
+
+                        <p class="blog-card-caption">
+                            <a href="#!">By: {{ post.author.first_name }} {{ post.author.last_name }}</a>
+                            <a href="#!"><i class="ti-heart text-danger"></i>{{ post.likes }} </a>
+                            <a href="#!"><i class="ti-comment"></i>{{ post.comments.count }} </a>
+                        </p>
+                        <p>{{ post.get_summary }}</p>
+
+                        <a href="{% url 'blog:blogpost' pk=post.id  %}" class="blog-card-link">Lire plus <i class="ti-angle-double-right"></i></a>
+                </div>
+            </div><!-- end of blog wrapper -->
+            {% endfor %}
+        </div><!-- end of container -->
+    </section><!-- end of blog section -->
+
+    <!-- contact section -->
+    <section class="section" id="contact">
+        <div class="container text-center">
+            <p class="section-subtitle">Comment pouvons-nous communiquer?</p>
+            <h6 class="section-title mb-5">Contactez Moi</h6>
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form action="{% url 'folioapp:contact' %}" method="post" class="contact-form col-md-10 col-lg-8 m-auto">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <input name="name" type="text" size="50" class="form-control" placeholder="Votre nom" required>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <input name="email" type="email" class="form-control" placeholder="Entrez votre email" requried>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <textarea name="comment" id="comment" rows="6" class="form-control"
+                            placeholder="Ecrivez votre commentaire"></textarea>
+                    </div>
+                    <div class="form-group col-sm-12 mt-3">
+                        <input type="submit" value="Envoyer" class="btn btn-outline-primary rounded">
+                    </div>
+                </div>
+            </form><!-- end of contact form -->
+        </div><!-- end of container -->
+    </section><!-- end of contact section -->
+
+{% endblock %}

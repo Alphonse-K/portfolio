@@ -1,0 +1,24 @@
+{% extends 'base1.html'%}
+{% load crispy_forms_tags %} 
+{% block title %}Add an Article{% endblock %}
+
+{% block content %}
+    <div class="my_profile container">
+        <h1>Bienvenue Sur Votre Profile!</h1>
+        <div class="col-md-8 col-lg-8 my_profile_info">
+            <div>
+                <img src="{{ my_profile.photo.url }}" alt="alphonse's photo">
+                <div style="text-align: start;">
+                    <p>fistname: <strong>{{ my_profile.first_name }}</strong></p>
+                    <p>lastname: <strong>{{ my_profile.last_name }}</strong></p>
+                    <p>email: <strong>{{ my_profile.email }}</strong></p>
+                </div>
+            </div>
+            <div>
+                <h4>Biographie:</h4>
+                <p>{{ my_profile.biography }}</p>
+            </div>
+        </div>
+        <a class="btn btn-primary mt-5" href="{% url 'folioapp:profile_update' pk=my_profile.id %}">Actualiser le profil</a>
+    </div>
+{% endblock %}

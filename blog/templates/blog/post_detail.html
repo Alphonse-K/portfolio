@@ -1,0 +1,86 @@
+{% extends "base1.html" %}
+{% load crispy_forms_tags %} 
+
+{% load static %}
+{% block title %}{{ single_post.title }}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row post-container">
+
+            <div class="col-md-12 col-lg-7">
+                <h1>{{ single_post.title }}</h1>
+                <p style="margin-top: 1rem; color: grey; font-style: italic;">Par {{ single_post.author.first_name }} {{ single_post.author.last_name }}, {{ single_post.pub_date }}</p>
+            
+                {% if single_post.image %}
+                    <img src="{{single_post.image.url }}" alt="{{ single_post.title }}" class="mb-5">
+                {% else %}
+                    <p>Pas d'image disponible.</p>
+                {% endif %}
+            
+                <div class=" mb-5">
+                    {{ single_post.content }}
+                </div>
+                <div class="likes-comments-count">
+                    <form action="{% url 'blog:likes' pk=single_post.id %}" method="post">
+                        {% csrf_token %}
+                        <button style="font-size: 1.4rem; background: none; color: #444; border: none;"><i class="ti-heart text-danger"></i>{{ single_post.likes }}</button>
+                    </form>
+                    {% if user.is_authenticated %}
+                        <a href="#comment"><i class="ti-comment"></i>{{ single_post.comments.count }}</a> 
+                    {% else %}
+                        <a href="{% url 'login' %}"><i class="ti-comment"></i>{{ single_post.comments.count }}</a> 
+                    {% endif %}
+                </div>
+
+            </div>
+            <div id="post-list-tag" class=" col-md-12 col-lg-4 mt-5 pt-5 post-list">
+                <h2>Blog recent:</h2>
+                {% for post in posts %}
+                    <h5>
+                        <a href="{% url 'blog:blogpost' pk=post.id %}">{{ post.title }}</a>
+                    </h5>
+                {%endfor%}
+                <div class="mt-5 comment-post" >
+                        {% for comment in comments %}
+                            <div style="display: flex;">
+                                <div class="mb-2">
+                                    <i class="ti-comments"></i>
+                                    <span style="color: #240046; font-weight: bolder;">{{ comment.author.username }} -</span>
+                                    <span style="color: #240046;">ajoute le <small style="color: #b1afae;">{{ comment.pub_date }}</small></span>
+                                    <p class="mt-1">{{ comment.content }}</p>
+                                </div>
+                                <div class="mx-1">
+                                    {% if comment.author == user %}
+                                        <a href="{% url 'blog:comment' pk=comment.id %}" class="link" ><i class="ti-pencil-alt"></i></a>
+                                    {% endif %}
+                                </div>                 
+                            </div>
+                        {%endfor%}
+                        <h3 id="comment">Ajouter un commentaire:</h3>
+
+                        {% if user.is_authenticated %}
+                            {% if messages %}
+                                <ul  class="messages" style="display: flex; flex-direction: column;  justify-content: flex-start;  margin: 0; padding: 0;">
+                                    {% for message in messages %}
+                                        <li style="list-style-type: none;" class="alert alert-success">{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {{ form|crispy}}
+                                <input class="btn btn-primary" type="submit" value="Submit">
+                            </form>
+                        {% else %}
+                            <p>Vous devez etre <a style="color: #240046; text-decoration: underline;" href="{% url 'login' %}">connecte</a> pour commenter.</p>
+                        {% endif %}
+
+                </div>
+            </div>
+        
+        </div>
+    </div>
+
+{% endblock %}
+

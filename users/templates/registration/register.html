@@ -1,0 +1,36 @@
+{% extends 'base1.html'%}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block title %}Creer votre compte{% endblock %}
+
+{% block content %}
+    <div class="container-fluid" style="text-align: center;">
+        {% if messages %}
+            <ul style="list-style-type: none;" class="messages">
+            {% for message in messages %}
+                <li style="list-style-type: none;" class="alert alert-success">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <div class="container-fluid" style="display: flex; justify-content: center; margin-top: 7rem; margin-bottom: 7rem;">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4" >
+            {% if form.errors %}<p class="alert alert-danger">Corrigez les erreurs avant de continuer<p>{% endif %}
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                {{ form.email|as_crispy_field }}
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                        {{form.first_name|as_crispy_field}}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                      {{ form.last_name|as_crispy_field }}
+                    </div>
+                </div>
+                {{ form.password1|as_crispy_field }}
+                {{ form.password2|as_crispy_field }}
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+{% endblock %}
